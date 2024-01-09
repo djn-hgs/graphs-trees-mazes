@@ -54,47 +54,38 @@ networkx.draw_networkx_edge_labels(G, pos, edge_labels=labels)
 plt.show()
 
 while True:
-    start = input('Where to start? ')
+    start = input(f'Where to start? ')
 
-    while True:
-        target = input('Target node? ')
+    queue = [start]
+    visited = [start]
+    traversal = []
 
-        if target == '':
-            break
+    distance = {
+        node: math.inf for node in example_adj_dict
+    }
 
-        queue = [start]
+    distance[start] = 0
 
-        distances = {node: math.inf for node in example_adj_dict}
-        distances[start] = 0
+    while queue:
+        node = queue.pop(0)
 
-        predecessor = {node: None for node in example_adj_dict}
+        traversal.append(node)
 
-        while queue:
-            print(queue)
+        print(f'Visiting {node}')
+        print(f'Queue {queue}')
 
-            node = min(queue, key=lambda n: distances[n])
-            queue.remove(node)
+        for neighbour in example_adj_dict[node]:
+            print(f'Neighbour {neighbour}')
 
-            for neighbour in example_adj_dict[node]:
-                new_dist = distances[node] + example_adj_dict[node][neighbour]
-                if new_dist < distances[neighbour]:
-                    distances[neighbour] = new_dist
-                    predecessor[neighbour] = node
+            new_dist = distance[node] + example_adj_dict[node][neighbour]
 
-                    if neighbour == target:
-                        queue = []
-                        break
+            if new_dist < distance[neighbour]:
+                visited.append(neighbour)
 
-                    queue.append(neighbour)
+                distance[neighbour] = new_dist
 
-        cursor = target
-        path = []
+                queue.append(neighbour)
 
-        while cursor:
-            path.append(cursor)
+            print(f'Distances {distance}')
 
-            cursor = predecessor[cursor]
-
-        path.reverse()
-
-        print(f'Shortest path from {start} to {target}: {path} with length {distances[target]}')
+    print(f'Traversal starting at {start}: {traversal}')

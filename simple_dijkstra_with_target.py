@@ -22,19 +22,47 @@ def my_adj_dict(num_nodes=15, num_edges=20):
 
     return adj_dict
 
-
-example_adj_dict = {
-    'A': {'B': 2, 'G': 3},
-    'B': {'A': 2, 'H': 2},
-    'C': {'D': 3, 'G': 1},
-    'D': {'C': 3, 'H': 2, 'I': 2},
-    'G': {'A': 3, 'C': 1, 'K': 3, 'L': 1},
-    'H': {'B': 2, 'D': 2, 'L': 4},
-    'I': {'D': 2, 'M': 3},
-    'K': {'G': 3},
-    'L': {'G': 1, 'H': 4, 'M': 2},
-    'M': {'I': 3, 'L': 2}
+example_edge_list = {
+    ('A', 'B'): 2,
+    ('A', 'G'): 3,
+    ('B', 'H'): 2,
+    ('C', 'D'): 3,
+    ('C', 'G'): 1,
+    ('D', 'H'): 2,
+    ('D', 'I'): 2,
+    ('G', 'K'): 3,
+    ('G', 'L'): 1,
+    ('H', 'L'): 1,
+    ('I', 'M'): 3,
+    ('L', 'M'): 2
 }
+
+example_adj_dict = {}
+
+for (start, finish) in example_edge_list:
+
+    weight = example_edge_list[(start, finish)]
+
+    if start not in example_adj_dict:
+        example_adj_dict[start] = {}
+    example_adj_dict[start][finish] = weight
+
+    if finish not in example_adj_dict:
+        example_adj_dict[finish] = {}
+    example_adj_dict[finish][start] = weight
+
+# example_adj_dict = {
+#     'A': {'B': 2, 'G': 3},
+#     'B': {'A': 2, 'H': 2},
+#     'C': {'D': 3, 'G': 1},
+#     'D': {'C': 3, 'H': 2, 'I': 2},
+#     'G': {'A': 3, 'C': 1, 'K': 3, 'L': 1},
+#     'H': {'B': 2, 'D': 2, 'L': 4},
+#     'I': {'D': 2, 'M': 3},
+#     'K': {'G': 3},
+#     'L': {'G': 1, 'H': 4, 'M': 2},
+#     'M': {'I': 3, 'L': 2}
+# }
 
 G = networkx.Graph()
 

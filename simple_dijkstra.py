@@ -55,7 +55,6 @@ plt.show()
 
 while True:
     start = input('Where to start? ')
-    targetG = input('Where to finish?')
 
     queue = [start]
 
@@ -65,6 +64,7 @@ while True:
     traversal = []
 
     while queue:
+        print(queue)
         node = min(queue, key=lambda n: distances[n])
         queue.remove(node)
 
@@ -74,9 +74,6 @@ while True:
             new_dist = distances[node] + example_adj_dict[node][neighbour]
             if new_dist < distances[neighbour]:
                 distances[neighbour] = new_dist
-
-                if neighbour == target:
-                    break
 
                 queue.append(neighbour)
 
